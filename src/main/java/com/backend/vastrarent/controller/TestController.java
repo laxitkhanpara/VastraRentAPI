@@ -4,14 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/api/lol")
+@RequestMapping("/lol")
 @RequiredArgsConstructor
 public class TestController {
+    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @GetMapping
     public String getString() {
-        return "Hi"; // Fixed spelling for clarity
+        logger.info("****************************************************");
+        return "Hi";
     }
 }

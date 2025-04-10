@@ -34,17 +34,18 @@ dependencies {
 	// implementation 'org.springframework.ai:spring-ai-redis-store-spring-boot-starter'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	implementation 'mysql:mysql-connector-java:8.0.28'
+	implementation 'org.postgresql:postgresql:42.7.2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	// Google Cloud Storage
-	implementation 'com.google.cloud:google-cloud-storage:2.28.0'
 
-	// Firebase Admin SDK
-	implementation 'com.google.firebase:firebase-admin:9.2.0'
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// jwt
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
 }
 
 dependencyManagement {

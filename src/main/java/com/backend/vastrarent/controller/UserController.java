@@ -11,12 +11,11 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
     @GetMapping
     public ResponseEntity<List<UserDto.UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());

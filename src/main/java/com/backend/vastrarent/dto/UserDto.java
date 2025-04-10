@@ -36,6 +36,7 @@ public class UserDto {
         private String password;
 
         private Gender gender;
+        private Role role;
 
         @Past(message = "Date of birth must be in the past")
         private LocalDate dateOfBirth;

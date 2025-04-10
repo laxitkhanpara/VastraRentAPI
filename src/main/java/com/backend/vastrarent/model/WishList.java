@@ -1,35 +1,33 @@
 package com.backend.vastrarent.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "cartItem")
+import java.time.LocalDateTime;
+
+@Table(name = "wishlist")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CartItem {
-
+@Entity
+public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(nullable = false)
-    private Integer quantity;
-
-    private Double unitPrice;
-    private Double totalPrice;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }
