@@ -77,9 +77,44 @@ public class ProductMapper {
                 .owner(owner)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-              .build();
+                .build();
     }
-
+    public ProductUserDTO toProductUserDto(Product product) {
+        return ProductUserDTO.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .description(product.getDescription())
+                .category(product.getCategory())
+                .size(product.getSize())
+                .color(product.getColor())
+                .styleTags(product.getStyleTags())
+                .condition(product.getCondition())
+                .retail(product.getRetail())
+                .rentalPrice(product.getRentalPrice())
+                .securityDeposit(product.getSecurityDeposit())
+                .status(product.getStatus())
+                .careInstructions(product.getCareInstructions())
+                .country(product.getCountry())
+                .state(product.getState())
+                .city(product.getCity())
+                .postalCode(product.getPostalCode())
+                .address(product.getAddress())
+                .latitude(product.getLatitude())
+                .longitude(product.getLongitude())
+                .isAvailable(product.isAvailable())
+                .termAndCondition(product.isTermAndCondition())
+                .views(product.getViews())
+                .availableFrom(product.getAvailableFrom())
+                .availableTill(product.getAvailableTill())
+                .imageUrls(product.getImageUrls())
+                .ownerId(product.getOwner() != null ? product.getOwner().getId() : null)
+                .ownerProfile(product.getOwner() != null ? product.getOwner().getProfilePicture():null)
+                .ownerName(product.getOwner() != null ? product.getOwner().getFullName():null)
+                .createdAt(product.getCreatedAt())
+                .updatedAt(product.getUpdatedAt())
+                .quntity((product.getQuantity()))
+                .build();
+    }
     public void updateProductFromRequest(Product product, ProductRequest productRequest) {
         product.setTitle(productRequest.getTitle());
         product.setDescription(productRequest.getDescription());

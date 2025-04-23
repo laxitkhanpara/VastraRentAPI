@@ -1,12 +1,17 @@
 package com.backend.vastrarent.model;
 
 import com.backend.vastrarent.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import jakarta.persistence.Column;
+import org.hibernate.annotations.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -47,7 +52,7 @@ public class Product {
     @Column(nullable = false)
     private double Retail;
 
-    @Column(nullable = false)
+    @Column(name = "rental_price",nullable = false)
     private double  rentalPrice;
 
     @Column(nullable = false)
@@ -64,15 +69,14 @@ public class Product {
     private String city;
     private String postalCode;
     private String address;
-    private String latitude;
-    private String longitude;
+    private Double  latitude;
+    private Double  longitude;
 
     private boolean isAvailable = true;
     private boolean termAndCondition;
 
     private int views = 0;
 
-    @Column()
     private int quantity = 1;
 
     @Column(nullable = false)
@@ -87,6 +91,15 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User owner;
 
+    @Column(columnDefinition = "geography(Point,4326)")
+    private Point location;
+
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    public void setLocationFromLatLng() {
+        if (latitude != null && longitude != null) {
+            this.location = new GeometryFactory().createPoint(new Coordinate(longitude, latitude));
+        }
+    }
 }

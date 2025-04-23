@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,10 +23,10 @@ public interface ProductService {
     ProductDTO createProduct(ProductRequest productRequest, Long userId);
 
     @Transactional(readOnly = true)
-    ProductDTO getProductById(Long productId);
+    ProductUserDTO getProductById(Long productId);
 
     @Transactional(readOnly = true)
-    Page<ProductDTO> getAllProducts(Pageable pageable);
+    Page<ProductUserDTO> getAllProducts(Pageable pageable);
 
     @Transactional(readOnly = true)
     Page<ProductDTO> getAvailableProducts(Pageable pageable);
@@ -47,7 +46,7 @@ public interface ProductService {
     @Transactional
     ProductDTO toggleProductAvailability(Long productId, Long userId);
 
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     Page<ProductDTO> searchProducts(
             String category,
             String city,
@@ -55,7 +54,7 @@ public interface ProductService {
             Double maxPrice,
             LocalDate availableFrom,
             LocalDate availableTill,
-            Pageable pageable);
+            Pageable pageable);*/
 
     @Transactional(readOnly = true)
     List<ProductDTO> getTopViewedProducts();
@@ -65,4 +64,14 @@ public interface ProductService {
 
     @Transactional
     void increaseViewCount(Product product);
+
+
+
+    @Transactional
+    Page<ProductUserDTO> findNearbyProducts(double latitude, double longitude,
+                                            double distanceInMeters, int page, int size);
+
+/*    @Transactional
+    Page<ProductDTO> searchProducts(ProductSearchRequest request);*/
+
 }

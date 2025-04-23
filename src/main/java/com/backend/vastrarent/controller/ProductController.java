@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,7 +42,7 @@ public class ProductController {
 
     @GetMapping("/{productId}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable Long productId) {
-        ProductDTO product = productService.getProductById(productId);
+        ProductUserDTO product = productService.getProductById(productId);
         return ResponseEntity.ok(new ProductResponse("success", "Product fetched successfully", product));
     }
 
@@ -55,7 +56,7 @@ public class ProductController {
         Sort.Direction direction = sortDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
-        Page<ProductDTO> products = productService.getAllProducts(pageable);
+        Page<ProductUserDTO> products = productService.getAllProducts(pageable);
 
         return ResponseEntity.ok(new ProductResponse("success", "Products fetched successfully", products));
     }
@@ -130,7 +131,7 @@ public class ProductController {
         return ResponseEntity.ok(new ProductResponse("success", "Product availability toggled successfully", updatedProduct));
     }
 
-    @GetMapping("/search")
+    /*@GetMapping("/search")
     public ResponseEntity<ProductResponse> searchProducts(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String city,
@@ -151,7 +152,7 @@ public class ProductController {
 
         return ResponseEntity.ok(new ProductResponse("success", "Search results fetched successfully", products));
     }
-
+*/
     @GetMapping("/trending")
     public ResponseEntity<ProductResponse> getTrendingProducts() {
         List<ProductDTO> products = productService.getTopViewedProducts();
@@ -164,10 +165,32 @@ public class ProductController {
         return ResponseEntity.ok(new ProductResponse("success", "Search results fetched successfully", products));
     }
 
+
+
+    @GetMapping("/nearby")
+    public ResponseEntity<ProductResponse> getNearbyProducts(
+            @RequestParam double latitude,
+            @RequestParam double longitude,
+            @RequestParam(defaultValue = "5000") double distance,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<ProductUserDTO> products = productService.findNearbyProducts(
+                latitude, longitude, distance, page, size);
+        return ResponseEntity.ok(new ProductResponse("success","Search results fetched successfully",products));
+    }
+
     private Long getUserIdFromUserDetails(UserPrincipal userPrincipal) {
         // This is a placeholder implementation
         // In a real application, you would extract the user ID from the UserDetails object
         // depending on how your authentication is set up
         return userPrincipal.getId();
     }
+
+/*    @PostMapping("/search")
+    public ResponseEntity<Page<ProductDTO>> searchProducts(@RequestBody ProductSearchRequest request) {
+        Page<ProductDTO> products = productService.searchProducts(request);
+        return ResponseEntity.ok(products);
+    }*/
+
 }
