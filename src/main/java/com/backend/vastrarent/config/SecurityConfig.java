@@ -57,7 +57,9 @@ public class SecurityConfig {
                 .csrf(customizer->customizer.disable())
                 .authorizeHttpRequests(request->request
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/products/**").permitAll()
+                        .requestMatchers("/orders/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler))
                 .formLogin(Customizer.withDefaults())
@@ -102,9 +104,6 @@ public class SecurityConfig {
         return http.build();
     }
 }
-*
-*
-*
 *
 *
 * */
