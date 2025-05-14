@@ -223,6 +223,15 @@ public class OrderServiceImpl implements OrderService {
             throw new ValidationException("Deposit can only be returned when order is in RETURNED or COMPLETED status");
         }
 
+        // Check if both renter and owner have accepted terms
+        if (!order.isOwnerTermsAccepted()) {
+            throw new ValidationException("Terms and conditions not accepted by owner");
+        }
+
+        if (!order.isRenterTermsAccepted()) {
+            throw new ValidationException("Terms and conditions not accepted by renter");
+        }
+
         // Validate return amount
         if (request.getReturnAmount() > order.getSecurityDeposit()) {
             throw new ValidationException("Return amount cannot exceed security deposit amount");
