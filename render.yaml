@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: springboot-api
+    env: java
+    repo: https://github.com/your-username/your-repo-name
+    branch: main
+    buildCommand: ./gradlew build
+    startCommand: java -jar build/libs/your-api-name.jar
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
