@@ -7,6 +7,7 @@ WORKDIR /app
 # Copy and build the project
 COPY . .
 
+RUN chmod +x ./gradlew
 # Build the application (you can skip this if you push the built JAR)
 RUN ./gradlew build --no-daemon
 
